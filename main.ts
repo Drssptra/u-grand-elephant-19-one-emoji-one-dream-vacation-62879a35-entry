@@ -13,6 +13,13 @@ import { join } from "node:path";
 
 const EMOJI = "🌅";
 
+// Guard: never write an empty or whitespace-only entry. The bounty
+// requires exactly one emoji, so a blank entry would be a silent failure.
+if (EMOJI.trim().length === 0) {
+  console.error("entry must not be empty");
+  process.exit(1);
+}
+
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outputDir, { recursive: true });
 writeFileSync(join(outputDir, "entry.txt"), EMOJI, "utf8");
